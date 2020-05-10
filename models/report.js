@@ -13,7 +13,7 @@ const reportSchema = new mongoose.Schema({
     },
     status:{
         type:String,
-        enum : ['Negative', 'Travelled-Quarantine', 'Symptoms-Quarantine', 'Positive-Admit'],
+        enum : ["Negative", "Travelled-Quarantine", "Symptoms-Quarantine", "Positive-Admit"],
         required: true,
     }
 },{

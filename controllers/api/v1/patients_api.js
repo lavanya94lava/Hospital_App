@@ -5,31 +5,48 @@ const Patient = require('../../../models/patient');
 // create report
 module.exports.createReport = async function(req,res){
 
-    // find patient whose report needs to be created
-    let patient = await Patient.findOne({_id:req.params.id});
+    try{
+        console.log("create report -->", req.body, req.params.id);
 
-    //if no patient exist of such id then return
-    if(!patient){
-        return res.json(400,{
-            message:"no patient found with this id"
+        if(!Report.schema.path('status').enumValues.includes(req.body.status)){
+            console.log("true or false", Report.schema.path('status').enumValues.includes(req.body.status));
+            console.log("enum values are -->", Report.schema.path('status').enumValues);
+            return res.json(400,{
+                message:"check enum values"
+            });
+        }
+
+        // find patient whose report needs to be created
+        let patient = await Patient.findOne({_id:req.params.id});
+        //if no patient exist of such id then return
+        if(!patient){
+            return res.json(400,{
+                message:"no patient found with this id"
+            });
+        }
+    
+        //find the doctor who needs to create this report
+        let doctor = await User.findOne({_id:req.user});
+        const newReport = await Report.create({
+            doctor:doctor,
+            patient:patient,
+            status:req.body.status
+        });
+
+        //push this report in the array of reports of patient as a patient can have multiple reports
+        patient.reports.push(newReport);
+        patient.save();
+    
+        return res.json(200,{
+            message:"congrats!!you have created the report",
+            report:newReport   
         });
     }
-
-    //find the doctor who needs to create this report
-    let doctor = await User.findOne({_id:req.user});
-    const newReport = await Report.create({
-        doctor:doctor,
-        patient:patient,
-        status:req.body.status
-    });
-    
-    //push this report in the array of reports of patient as a patient can have multiple reports
-    patient.reports.push(newReport);
-    patient.save();
-
-    return res.json(200,{
-        message:"congrats!!you have created the report"
-    });
+    catch(err){
+        return res.json(500, {
+            message:"internal server error"
+        });
+    }
 }
 
 
@@ -72,15 +89,14 @@ module.exports.all_reports = async function(req,res){
 
 
 module.exports.registerPatient = async function(req,res){
-    // fill up all the details
-    if(!req.body.name|| !req.body.phone){
-        return res.json(400,{
-            message:"Fill All the fields"
-        })
-    }
+    // fill up all the details    
 
     try{
-        
+        if(!req.body.name||!req.body.phone){
+            return res.json(400,{
+                message:"Fill All the fields"
+            })
+        }
         // find if the patient already exists or not
         const patient = await Patient.findOne({phone:req.body.phone});
         // return all the details if patients exsists
@@ -90,13 +106,14 @@ module.exports.registerPatient = async function(req,res){
         //find the doctor who is logged in
         const doctor = await User.findById({_id:req.user});
         // register a new patient
-        await Patient.create({
+        const newPatient = await Patient.create({
             name:req.body.name,
             phone:req.body.phone,
-            doctor:doctor,
+            doctor:doctor._id,
         });
         return res.json(200,{
-            message:"Congrats!! you just created a patient"
+            message:"Congrats!! you just created a patient",
+            patient:newPatient
         });
     }
     catch(err){

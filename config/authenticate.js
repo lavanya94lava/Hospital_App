@@ -11,9 +11,8 @@ module.exports.authenticate = async function(req,res,next){
             //make doctor the user
             req.user = token._id;
             // console.log(req.user);
-
+            
             const user = await User.findById(token._id);
-            return user;
             next();
         } catch (err){
             return res.json(400,{
