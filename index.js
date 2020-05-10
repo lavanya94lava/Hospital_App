@@ -1,19 +1,18 @@
 const express = require('express');
 const app = express();
 const port = 8000;
-const bodyParser = require('body-parser');
 const passport = require('passport');
-const passportJwt = require('./config/passport-jwt-strategy');
+const passportJwt = require('passport-jwt');
+const bodyParser = require("body-parser");
 //connection to mongoDB
 const db = require('./config/mongoose');
 
 
+app.use(passport.initialize());
 //use this middleware to read the urlencoded values
-app.use(express.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //to parse all the json data coming in requests
-app.use(bodyParser.json());
-//this contains all the routes 
 app.use('/',require('./routes'));
 
 //connect your server

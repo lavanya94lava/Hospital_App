@@ -6,10 +6,8 @@ const Patient = require('../../../models/patient');
 module.exports.createReport = async function(req,res){
 
     try{
-        console.log("create report -->", req.body, req.params.id);
 
         if(!Report.schema.path('status').enumValues.includes(req.body.status)){
-            console.log("true or false", Report.schema.path('status').enumValues.includes(req.body.status));
             console.log("enum values are -->", Report.schema.path('status').enumValues);
             return res.json(400,{
                 message:"check enum values"
@@ -103,8 +101,11 @@ module.exports.registerPatient = async function(req,res){
         if(patient){
             return res.json(200, {patient:patient});
         }   
+
         //find the doctor who is logged in
-        const doctor = await User.findById({_id:req.user});
+        const doctor = await User.findById({_id:req.user._id});
+
+        console.log("doctor is ", doctor);
         // register a new patient
         const newPatient = await Patient.create({
             name:req.body.name,
