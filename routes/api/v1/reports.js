@@ -1,7 +1,7 @@
 const express = require('express');
-const token = require('../../../config/authenticate');
+const passport = require("../../../config/passport-jwt-strategy");
 const router  = express.Router();
 const reportsApi = require("../../../controllers/api/v1/reports_api");
 
-router.get('/:status',token.authenticate, reportsApi.statusReports);
+router.get('/:status',passport.authenticate("jwt",{session:false}), reportsApi.statusReports);
 module.exports = router;

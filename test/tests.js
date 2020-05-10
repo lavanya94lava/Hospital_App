@@ -11,7 +11,7 @@ describe('POST /patients/register',()=>{
 
         const newPatient = {
             name: 'Ajay',
-            phone:'9000000000'
+            phone:'9000000000',
         };
         chai.request(app)
             .post('/doctors/login')
@@ -20,17 +20,16 @@ describe('POST /patients/register',()=>{
                 password:"abc"
             })            
             .end((err,res)=>{
-                console.log("res message", res.body.message);
+                console.log("res message register", res.body.message);
                 res.should.have.status(200);
-                res.body.should.have.property("token");
+                res.body.should.have.property("data");
                 res.body.should.have.property("message"); 
 
-                let token = res.body.token;
-                
+                let token = res.body.data.token;
                 chai.request(app)
                 .post("/patients/register_patient")
-                .set('content-type', 'application/x-www-form-urlencoded')
                 .set("Authorization","Bearer"+token)
+                .type("form")
                 .send(newPatient)
                 .end((err,res)=>{
                     if(err){
@@ -38,7 +37,7 @@ describe('POST /patients/register',()=>{
                         console.log("error is -->",err);
                     }
                     // console.log("hoi--->",res)
-                    console.log("this is test",res.body.message);
+                    console.log("this is test",res.body);
                     res.should.have.status(200);
                     res.body.patient.should.have.property('name');
                     res.body.patient.should.have.property('phone');
@@ -64,17 +63,23 @@ describe('POST /:id/create_report', ()=>{
             password:"abc"
         })            
         .end((err,res)=>{
+            console.log("res message report", res.body.message);
             res.should.have.status(200);
-            res.body.should.have.property("token");
+            res.body.should.have.property("data");
             res.body.should.have.property("message"); 
             
-            let token = res.body.token;
+            let token = res.body.data.token;
             chai.request(app)
                 .post(`/patients/${newReport.patient}/create_report`)
                 .set('Authorization',"Bearer"+token)
                 .send(newReport)
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    if(err){
+                        done(err);
+                        console.log("error is -->",err);
+                    }
+                    console.log("this is test",res.body);
+                    res.should.have.status(200);
                     res.body.report.should.have.property('status');
                     res.body.report.should.have.property('doctor');
                     res.body.report.should.have.property('patient');

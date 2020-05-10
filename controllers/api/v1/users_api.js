@@ -62,7 +62,9 @@ module.exports.login = async function(req,res){
         return res.json(200,{
             message:"Sign in successful",
             //create a JSON token to verify the user later 
-            token:jwt.sign(doctor.toJSON(),"hospital",{expiresIn:'3h'}),
+            data:{
+                token:jwt.sign(doctor.toJSON(),"hospital",{expiresIn:'3h'}),
+            }
         });
     }
     catch(err){

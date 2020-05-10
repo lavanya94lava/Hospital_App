@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const port = 8000;
 const bodyParser = require('body-parser');
+const passport = require('passport');
+const passportJwt = require('./config/passport-jwt-strategy');
 //connection to mongoDB
 const db = require('./config/mongoose');
 
