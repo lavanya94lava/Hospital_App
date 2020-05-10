@@ -72,37 +72,3 @@ module.exports.login = async function(req,res){
     }
 }
 
-module.exports.registerPatient = async function(req,res){
-    // fill up all the details
-    if(!req.body.name|| !req.body.phone){
-        return res.json(400,{
-            message:"Fill All the fields"
-        })
-    }
-
-    try{
-        
-        // find if the patient already exists or not
-        const patient = await Patient.findOne({phone:req.body.phone});
-        // return all the details if patients exsists
-        if(patient){
-            return res.json(200, {patient:patient});
-        }   
-        //find the doctor who is logged in
-        const doctor = await User.findById({_id:req.user});
-        // register a new patient
-        await Patient.create({
-            name:req.body.name,
-            phone:req.body.phone,
-            doctor:req.user,
-        });
-        return res.json(200,{
-            message:"Congrats!! you just created a patient"
-        });
-    }
-    catch(err){
-        return res.json(500,{
-            message:"Internal server Error"
-        });
-    }
-}

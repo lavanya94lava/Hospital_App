@@ -21,25 +21,4 @@ const reportSchema = new mongoose.Schema({
 });
 
 const Report = mongoose.model("Report", reportSchema);
-module.exports = Report;const mongoose = require("mongoose");
-
-const userSchema = new mongoose.Schema({
-    email:{
-        type:String,
-        required:true,
-        unique:true
-    },
-    password:{
-        type:String,
-        required:true,
-    },
-    name:{
-        type:String,
-        required:true
-    }
-}, {
-    timestamps:true
-});
-
-const User = mongoose.model("Doctor", userSchema);
-module.exports = User;
+module.exports = Report;

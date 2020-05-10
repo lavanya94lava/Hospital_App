@@ -6,5 +6,4 @@ const usersApi = require('../../../controllers/api/v1/users_api');
 // route action to be performed by the user
 router.post('/register',usersApi.register);
 router.post('/login',usersApi.login);
-router.post('/register_patient',token.authenticate,usersApi.registerPatient);
-module.exports = router;
+module.exports = router; 
