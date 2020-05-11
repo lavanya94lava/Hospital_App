@@ -25,7 +25,7 @@ In this project, we make an API for a hospital which in which a doctor can login
 > cd Hospital_App
 > run nodemon index.js
 
-    for tests
+for tests
 
 > npm run test
 
