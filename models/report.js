@@ -1,3 +1,5 @@
+// this file contains the model/schema of a Report
+
 const mongoose = require("mongoose");
 
 const reportSchema = new mongoose.Schema({

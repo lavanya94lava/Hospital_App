@@ -48,7 +48,7 @@ describe('POST /patients/register',()=>{
 });
 
 
-
+//first we would see whether the doctor is logged in or not then he would create reports of patient
 describe('POST /:id/create_report', ()=>{
     it("it should check whether it returns the newly created report", (done)=>{
         const newReport = {

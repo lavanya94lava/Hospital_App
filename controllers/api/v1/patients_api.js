@@ -1,3 +1,5 @@
+// this file contains all the functionalities of a patient like getting all reports, registerng a patient, creating a report of a patient.
+
 const User = require('../../../models/doctor');
 const Report = require('../../../models/report');
 const Patient = require('../../../models/patient');
@@ -47,7 +49,7 @@ module.exports.createReport = async function(req,res){
     }
 }
 
-
+// get all the report of a particular patient using the id passed in the paramaters.
 module.exports.all_reports = async function(req,res){
     //populate all the fields of the patient from the DB to use them later
     try{
@@ -57,12 +59,11 @@ module.exports.all_reports = async function(req,res){
                             .populate({
                                 path:"reports",
                                 populate:{
-                                    path:"patient",
-                                },
-                                populate:{
                                     path:"doctor"
                                 },
-                                
+                                populate:{
+                                    path:"patient",
+                                }
                             })
                             ;
         
@@ -86,6 +87,7 @@ module.exports.all_reports = async function(req,res){
 }
 
 
+// register a new patient only if doctor is logged in
 module.exports.registerPatient = async function(req,res){
     // fill up all the details    
 

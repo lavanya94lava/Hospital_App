@@ -1,10 +1,13 @@
+// this file contains all the functionalities of a doctor(user), like registering a doctor, loggin in one etc.
 const User = require('../../../models/doctor');
 const Patient = require('../../../models/patient');
 const jwt = require('jsonwebtoken');
 
+
+// register a new user
 module.exports.register = async function(req,res){
     
-    
+    // req.body should have all the fields filled
     if(!req.body.name||!req.body.email || !req.body.password){
         
         return res.json(200,{message:"Please fill all the required fields"});
@@ -42,6 +45,7 @@ module.exports.register = async function(req,res){
     }
 }
 
+//login the user using credentials
 module.exports.login = async function(req,res){
     // fill up all the details
     if(!req.body.email || !req.body.password){

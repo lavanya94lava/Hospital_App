@@ -1,3 +1,5 @@
+// this file contains the model/schema of a Patient
+
 const mongoose = require("mongoose");
 
 const patientSchema = new mongoose.Schema({

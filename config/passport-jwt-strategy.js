@@ -1,3 +1,5 @@
+// this file contains the authentication part of routes using passport, passport-jwt
+
 const passport = require('passport');
 
 const JWTStrategy = require('passport-jwt').Strategy;
