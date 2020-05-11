@@ -19,13 +19,13 @@ In this project, we make an API for a hospital which in which a doctor can login
 6. jsonwebtoken
 7. body-parser
 
-#setup
+# setup
 
 >      git clone https://github.com/lavanya94lava/Hospital_App.git
 >      cd Hospital_App
 >      run nodemon index.js
 
-for tests
+    for tests
 
 >      npm run test
 
