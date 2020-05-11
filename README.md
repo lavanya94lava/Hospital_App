@@ -21,13 +21,13 @@ In this project, we make an API for a hospital which in which a doctor can login
 
 #setup
 
-> git clone https://github.com/lavanya94lava/Hospital_App.git
-> cd Hospital_App
-> run nodemon index.js
+>      git clone https://github.com/lavanya94lava/Hospital_App.git
+>      cd Hospital_App
+>      run nodemon index.js
 
 for tests
 
-> npm run test
+>      npm run test
 
 
 # routes
